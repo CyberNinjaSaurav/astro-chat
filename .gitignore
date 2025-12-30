@@ -1,0 +1,10 @@
+# Environment variables
+.env
+client/.env
+server/.env
+
+# Node
+node_modules/
+
+# Logs
+*.log
