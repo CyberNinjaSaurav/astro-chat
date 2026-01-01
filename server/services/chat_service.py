@@ -11,26 +11,30 @@ Be concise, creative, and context-aware.
 """
 
 def chat_with_memory(user_email, user_message):
+    try:
 
-    save_message(user_email, "user", user_message)
-    history = get_recent_messages(user_email)
+        save_message(user_email, "user", user_message)
+        history = get_recent_messages(user_email)
 
-    messages = [{"role": "system", "content": SYSTEM_PROMPT}]
-    for msg in history:
-        messages.append({
-            "role": msg["role"],
-            "content": msg["content"]
-        })
+        messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+        for msg in history:
+            messages.append({
+                "role": msg["role"],
+                "content": msg["content"]
+            })
 
-    response = client.chat.completions.create(
-        model ="gpt-4o-mini", 
-        messages = messages,
-        temperature=0.7
-    )
+        response = client.chat.completions.create(
+            model ="gpt-4o-mini", 
+            messages = messages,
+            temperature=0.7
+        )
 
-    reply = response.choices[0].message.content
+        reply = response.choices[0].message.content
 
-    save_message(user_email, "assistant", reply)
+        save_message(user_email, "assistant", reply)
 
-    return reply
+        return reply
+    except Exception as e:
+        print("Chat Service ERROR: ", e)
+        return "AI service failed. Check backend logs."
 

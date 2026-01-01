@@ -7,22 +7,24 @@ const API = axios.create({
   },
 });
 
+
+API.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token"); 
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+// AUTH
 export const signupUser = (data) => API.post("/auth/signup", data);
 export const loginUser = (data) => API.post("/auth/login", data);
 export const googleLogin = (token) =>
   API.post("/auth/google", { token });
 
+// CHAT
 export const sendChatMessage = (message) =>
-  API.post(
-    "/chat",
-    { message },
-    {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    }
+  API.post("/chat/", { message });
 
-  );
 
 export default API;
-

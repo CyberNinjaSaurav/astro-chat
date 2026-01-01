@@ -1,14 +1,23 @@
 import jwt
-from flask import request
+from flask import jsonify
 from config import JWT_SECRET
 
-def get_current_user(req):
-    auth_header = req.headers.get("Authorization")
+def get_current_user(request):
+    auth_header = request.headers.get("Authorization")
 
     if not auth_header or not auth_header.startswith("Bearer "):
-        raise Exception("Unauthorized")
+        return None
     
     token = auth_header.split(" ")[1]
-    payload = jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
 
-    return payload
+    try:
+        payload = jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
+        return payload
+    except jwt.ExpiredSignatureError:
+        return None
+    except jwt.InvalidTokenError:
+        return None
+
+    
+
+    

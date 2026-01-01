@@ -8,7 +8,7 @@ load_dotenv()
 
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, supports_credentials=True)
 
     # register routes
 app.register_blueprint(auth_bp, url_prefix="/auth")

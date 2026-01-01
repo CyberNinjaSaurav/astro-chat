@@ -3,12 +3,13 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import ChatPage from './pages/ChatPage';
+import ProtectedRoute from './components/ProtectedRoute';
 
 // A simple component to protect routes
-const PrivateRoute = ({ children }) => {
-  const token = localStorage.getItem('authToken');
-  return token ? children : <Navigate to="/login" />;
-};
+// const PrivateRoute = ({ children }) => {
+//   const token = localStorage.getItem('authToken');
+//   return token ? children : <Navigate to="/login" />;
+// };
 
 function App() {
   return (
@@ -17,15 +18,15 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route 
-          path="/" 
+          path="/chat" 
           element={
-            <PrivateRoute>
+            <ProtectedRoute>
               <ChatPage />
-            </PrivateRoute>
+            </ProtectedRoute>
           } 
         />
-        {/* Redirect any other path to the main chat page or login */}
-        <Route path="*" element={<Navigate to="/" />} />
+        
+        <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     </Router>
   );
