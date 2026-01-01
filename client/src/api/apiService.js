@@ -12,4 +12,17 @@ export const loginUser = (data) => API.post("/auth/login", data);
 export const googleLogin = (token) =>
   API.post("/auth/google", { token });
 
+export const sendChatMessage = (message) =>
+  API.post(
+    "/chat",
+    { message },
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }
+
+  );
+
 export default API;
+
