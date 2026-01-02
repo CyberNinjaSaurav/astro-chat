@@ -1,30 +1,44 @@
-import axios from "axios";
+const API_BASE = "http://localhost:5000";
 
-const API = axios.create({
-  baseURL: "http://localhost:5000",
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+export const streamChatMessage = async (message, onToken) => {
+  const token = localStorage.getItem("token");
 
+  const response = await fetch(`${API_BASE}/chat/stream`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ message }),
+  });
 
-API.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token"); 
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder("utf-8");
+
+  while (true) {
+    const { value, done } = await reader.read();
+    if (done) break;
+    onToken(decoder.decode(value));
   }
-  return config;
-});
+};
 
-// AUTH
-export const signupUser = (data) => API.post("/auth/signup", data);
-export const loginUser = (data) => API.post("/auth/login", data);
+export const loginUser = (data) =>
+  fetch(`${API_BASE}/auth/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  }).then((r) => r.json());
+
+export const signupUser = (data) =>
+  fetch(`${API_BASE}/auth/signup`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  }).then((r) => r.json());
+
 export const googleLogin = (token) =>
-  API.post("/auth/google", { token });
-
-// CHAT
-export const sendChatMessage = (message) =>
-  API.post("/chat/", { message });
-
-
-export default API;
+  fetch(`${API_BASE}/auth/google`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ token }),
+  }).then((r) => r.json());

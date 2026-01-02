@@ -1,14 +1,13 @@
-from flask import Blueprint, request, jsonify
-from services.chat_service import chat_with_memory
+from flask import Blueprint, request, Response, jsonify
+from services.chat_service import stream_chat_with_memory
 from utils.jwt_utils import get_current_user
 
-chat_bp = Blueprint("chat", __name__)
+chat_bp = Blueprint("chat", __name__, url_prefix="/chat")
 
-@chat_bp.route("/", methods=["POST", "OPTIONS"])
-def chat():
-    # CORS preflight
+@chat_bp.route("/stream", methods=["POST", "OPTIONS"])
+def chat_stream():
     if request.method == "OPTIONS":
-        return jsonify({}), 200
+        return "", 200
 
     try:
         user = get_current_user(request)
@@ -17,19 +16,17 @@ def chat():
 
         data = request.get_json()
         if not data or "message" not in data:
-            return jsonify({"error": "Message is required"}), 400
+            return jsonify({"error": "Message required"}), 400
 
-        reply = chat_with_memory(
-            user_email=user["email"],
-            user_message=data["message"]
-        )
+        def generate():
+            for token in stream_chat_with_memory(
+                user_email=user["email"],
+                user_message=data["message"]
+            ):
+                yield token
 
-        # SAFETY: never return None
-        if not reply:
-            reply = "⚠️ AI did not return a response"
-
-        return jsonify({"reply": reply}), 200
+        return Response(generate(), mimetype="text/plain")
 
     except Exception as e:
-        print("CHAT ROUTE ERROR:", e)
+        print("CHAT STREAM ERROR:", e)
         return jsonify({"error": "Internal server error"}), 500
