@@ -11,3 +11,8 @@ opencv-python
 pyjwt
 bcrypt
 pymongo
+langchain
+langchain-community 
+langchain-openai 
+pypdf 
+tiktoken

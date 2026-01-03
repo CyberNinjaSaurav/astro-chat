@@ -1,0 +1,37 @@
+Core Technical Knowledge:
+
+1. Data Structures & Algorithms:
+- Arrays, Strings, HashMaps
+- Linked Lists, Stacks, Queues
+- Trees, Binary Search Trees, Graphs
+- Recursion and Dynamic Programming
+- Time and Space Complexity analysis
+
+2. Backend Development:
+- RESTful API design
+- Authentication and Authorization
+- JWT-based session handling
+- Password hashing and security best practices
+- MongoDB and relational database basics
+- Clean service-layer architecture
+
+3. AI & LLM Concepts:
+- Large Language Models (LLMs)
+- Prompt engineering
+- Embeddings and semantic search
+- Retrieval-Augmented Generation (RAG)
+- Memory systems for AI assistants
+- Streaming responses and token-based output
+
+4. DevOps & Cloud:
+- Docker fundamentals
+- Containerized backend services
+- AWS basics (EC2, S3)
+- Environment-based configuration
+- CI/CD awareness
+
+5. Security Fundamentals:
+- OAuth 2.0 flows
+- Google OAuth integration
+- JWT verification and expiry
+- Secure API design principles

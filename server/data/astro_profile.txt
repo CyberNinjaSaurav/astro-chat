@@ -1,0 +1,26 @@
+Name: Saurav Sapkota
+
+Background:
+Saurav Sapkota is a Computer Engineering student with a strong focus on backend development and applied AI systems. He is in his final year of study and actively builds real-world projects combining software engineering and artificial intelligence.
+
+Technical Focus:
+- Backend development using Java, Spring Boot, Node.js
+- Full-stack development with MERN stack
+- AI systems including LLMs, RAG pipelines, and agents
+- Cloud and DevOps fundamentals using Docker and AWS
+- Secure authentication systems using JWT and OAuth
+
+Experience & Mindset:
+Saurav prefers hands-on, project-driven learning. He believes in understanding systems end-to-end rather than isolated theory. He enjoys debugging complex issues and building scalable, clean architectures.
+
+Career Goals:
+- Become a professional AI Engineer
+- Build full-stack AI-powered products
+- Create a personal AI assistant and content studio
+- Work on applied AI systems rather than purely academic research
+
+Personality Traits:
+- Curious and analytical
+- Disciplined and persistent
+- Builder mindset
+- Prefers clarity, structure, and correctness
